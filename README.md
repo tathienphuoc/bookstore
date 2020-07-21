@@ -3,4 +3,4 @@ Sử dụng ngôn ngữ lập trình Java kết hợp với các framework để
 Datase:BookStore
 username: root
 password: mysql
-
+Đường dẫn trang web: http://localhost:1010/
