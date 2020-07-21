@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Đăng ký</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" th:href="@{/default/favicon.ico}"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/bootstrap/css/bootstrap.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/fonts/Linearicons-Free-v1.0.0/icon-font.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animate/animate.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/css-hamburgers/hamburgers.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/animsition/css/animsition.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/select2/select2.min.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/vendor/daterangepicker/daterangepicker.css}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/util.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <!--===============================================================================================-->
+    <!--Link Jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<th:block th:each="user:${users}">
+    <input th:value="${user.userName}" type="hidden" name="username"></input>
+</th:block>
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('default/bg-01.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+               <span class="login100-form-title p-b-41">
+               Đăng ký
+               </span>
+            <form class="login100-form validate-form p-b-33 p-t-5" th:action="@{/saveAccount}" method="post"
+                  th:object="${account}">
+                <div class="wrap-input100 validate-input" data-validate="Enter username">
+                    <input class="input100" type="text" name="username" placeholder="Tên người dùng"
+                           th:field="${account.userName}" id="username">
+                    <span class="focus-input100" data-placeholder="&#xe82a;"></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Enter password">
+                    <input class="input100" type="password" name="password" placeholder="Mật khẩu" id="password">
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                </div>
+                <div class="wrap-input100 validate-input" data-validate="Confirm password">
+                    <input class="input100" type="password" name="confirm_password" placeholder="Nhập lại mật khẩu"
+                           th:field="${account.pwd}" id="confirm_password">
+                    <span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                </div>
+                <span style="margin-left:10px;color:red" id='message' th:text="${message}"></span>
+                <div class="container-login100-form-btn m-t-32">
+                    <button class="login100-form-btn" id="btnSubmit" disabled type="submit">
+                        Đăng ký
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Check form using Jquery-->
+<script>
+         $('#username,#password,#confirm_password').on('keyup',function(){
+           $("#btnSubmit").attr("disabled", true);
+           var username=$('#username').val();
+           var pwd=$('#password').val();
+           var cpwd=$('#confirm_password').val();
+           if(checkUsername(username)&&checkPwd(pwd,cpwd)){
+             $("#btnSubmit").attr("disabled", false);
+           }
+
+         });
+         function checkUsername(username){
+         var names = $("input[name='username']")
+         .map(function(){return $(this).val();}).get();
+           if (username.indexOf(' ')>=0) {
+              $('#message').html('Tên người dùng không chứa khoảng trắng').css('color', 'red');
+            } else if (username.length<3) {
+              $('#message').html('Tên người dùng phải từ 3 ký tự trở lên').css('color', 'red');
+            }else if (names.includes(username)) {
+              $('#message').html('Tên người dùng đã được sử dụng').css('color', 'red');
+            }else{
+              $('#message').html('');
+              return true;
+            }
+            return false;
+         }
+
+         function checkPwd(pwd,cpwd){
+           if (pwd.trim()=='') {
+            $('#message').html('Vui lòng nhập mật khẩu').css('color', 'red');
+          }
+           else if (pwd==cpwd) {
+            $('#message').html('Mật khẩu trùng khớp').css('color', 'green');
+            return true;
+          } else{
+            $('#message').html('Mật khẩu không trùng khớp').css('color', 'red');
+           }
+           return false;
+         }
+
+
+      </script>
+</body>
+</html>

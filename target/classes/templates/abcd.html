@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+</head>
+<!--<link rel="stylesheet" type="text/css" th:href="@{/css/abcd.css}">-->
+<link rel="stylesheet" href="css/abcd.css">
+<body>
+<th:block th:each="user:${users}">
+    <p th:text="${user.userName}"></p>
+</th:block>
+</body>
+
+</html>

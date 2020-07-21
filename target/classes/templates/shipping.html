@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giao hàng</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--Link Jquery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <style>
+        body {
+  background: #eecda3;
+  background: -webkit-linear-gradient(to right, #4cbfec, #ecb1e7);
+  background: linear-gradient(to right,  #4cbfec, #ecb1e7);
+  min-height: 100vh;
+}
+
+    </style>
+</head>
+<body>
+<div class="px-4 px-lg-0">
+  <!-- End -->
+  <div style="margin-top:50px;"></div>
+  <div class="pb-5">
+    <div class="container">
+      <div class="row" th:each="shipping:${shippings}">
+        <div class="col-lg-12 p-5 bg-white rounded shadow-sm mb-5">
+          <!-- Shopping cart table -->
+          <div class="table-responsive">
+            <table class="table" style="text-align:center" th:each="ship:${shipping}">
+              <thead>
+              <tr>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Tên chủ thẻ</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Số điện thoại</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Địa chỉ</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Thành phố</div>
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td class="border-0 align-middle"><strong th:text="${ship.cardOwner}"></strong></td>
+                <td class="border-0 align-middle"><strong th:text="${ship.numberPhone}"></strong></td>
+                <td class="border-0 align-middle"><strong th:text="${ship.address}"></strong></td>
+                <td class="border-0 align-middle"><strong th:text="${ship.city}"></strong></td>
+              </tr>
+              </tbody>
+              <thead>
+              <tr>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="p-2 px-3 text-uppercase">Tên người dùng</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="p-2 px-3 text-uppercase">Tên sản phẩm</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Số lượng</div>
+                </th>
+                <th scope="col" class="border-0 bg-light">
+                  <div class="py-2 text-uppercase">Ngày đặt hàng</div>
+                </th>
+              </tr>
+              </thead>
+
+              <tbody th:each="item:${ship.cartitems}">
+              <td class="border-0 align-middle"><strong th:text="${item.account.userName}"></strong></td>
+              <td class="border-0 align-middle"><strong th:text="${item.book.title}"></strong></td>
+              <td class="border-0 align-middle"><strong th:text="${item.quantity}"></strong></td>
+              <td class="border-0 align-middle"><strong th:text="${item.orderDate}"></strong></td>
+              </tbody>
+              <td colspan="4"><a th:href="@{/shipping/{id}(id=${shipping.id})}" style="float:right;"type="button" class="btn btn-outline-primary rounded-pill py-2">Giao hàng</a></td>
+            </table>
+          </div>
+          <!-- End -->
+        </div>
+      </div>
+      <a href="/booksAdmin" type="button" style="float:right;" class="btn btn-outline-primary rounded-pill py-2">Trở về</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
